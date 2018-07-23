@@ -29,14 +29,29 @@ rating = float(firstMovie.find('strong').text) #convert it to a float/double
 
 #get the number of votes on the film. The find returns a dictionary
 dataValue = firstMovie.find('span' , attrs = {'name' : 'nv'})
-firstVotes = int(dataValue)
+
+
 print( dataValue['data-value']) #get the value given the key 'data-value' of the dictionary
 
+#names and lists to store the scraped data
+names = []
+years = []
+imdb_ratings = []
+metascores = []
+votes = []
 
-
-
-
-
-
-
-
+#extract data from movie container if the movie has a metascore
+for items in movie_containers:
+    if items.find('div', class_= 'ratings-metascore') is not None:
+        #This takes the names of every div element
+        name = items.find('div' , class_ = 'lister-item-content').h3.a.text
+        names.append(name)
+        #This takes the year released
+        year = items.find('span' , class_ = 'lister-item-year text-muted unbold').text
+        years.append(year)
+        #This gets the imdb ratings
+        rating = float(items.find('strong').text)
+        imdb_ratings.append(rating)
+        #This gets the metascores of each movie
+        metascore = items.find('span' , class_ = 'metascore favorable')
+        metascores.append(int(metascore)  
