@@ -42,7 +42,7 @@ votes = []
 
 #extract data from movie container if the movie has a metascore
 for items in movie_containers:
-    if items.find('div', class_= 'ratings-metascore') is not None:
+    if items.find('span', class_ = 'metascore favorable') is not None:
         #This takes the names of every div element
         name = items.find('div' , class_ = 'lister-item-content').h3.a.text
         names.append(name)
@@ -53,5 +53,12 @@ for items in movie_containers:
         rating = float(items.find('strong').text)
         imdb_ratings.append(rating)
         #This gets the metascores of each movie
-        metascore = items.find('span' , class_ = 'metascore favorable')
-        metascores.append(int(metascore)  
+        score = int(items.find('span' , class_ = 'metascore favorable').text)
+        metascores.append(score)
+        #gets the number of votes 
+        value = items.find('span' , attrs = {'name' : 'nv'})
+        votes.append(int(value['data-value']))
+       
+print(votes[1])
+
+
