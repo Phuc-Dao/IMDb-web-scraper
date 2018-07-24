@@ -1,6 +1,9 @@
 #This is used to import the get module from requests to do http requests
 from requests import get
 from bs4 import BeautifulSoup as soup
+from time import sleep
+from random import randint
+
 
 #This is the URL endpoint
 url = 'http://www.imdb.com/search/title?release_date=2017&sort=num_votes,desc&page=1'
@@ -29,9 +32,13 @@ rating = float(firstMovie.find('strong').text) #convert it to a float/double
 
 #get the number of votes on the film. The find returns a dictionary
 dataValue = firstMovie.find('span' , attrs = {'name' : 'nv'})
-
-
 print( dataValue['data-value']) #get the value given the key 'data-value' of the dictionary
+
+
+#creates parameters for different url end pointer
+pages = [str(i) for i in range(1,5)]
+years_url = [str(i) for i in range(2000,2018)]
+
 
 #names and lists to store the scraped data
 names = []
@@ -59,6 +66,6 @@ for items in movie_containers:
         value = items.find('span' , attrs = {'name' : 'nv'})
         votes.append(int(value['data-value']))
        
-print(votes[1])
+
 
 
