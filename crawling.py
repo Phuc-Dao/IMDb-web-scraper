@@ -60,7 +60,11 @@ for year in years_url:
             # gets all elements that have a metacritic score
             if items.find('span', class_='metascore favorable') is not None:
                 # This takes the names of every div element
-                name = items.find('div', class_='lister-item-content').h3.a.text
+                name_comma = items.find('div', class_='lister-item-content').h3.a.text
+
+                #use the replace function to replace all commas in the string so when we use it
+                #as a delimiter in the csv file it doesnt read it as a new column
+                name = str(name_comma).replace(',' , '')
                 names.append(name)
                 # This takes the year released
                 year = items.find('span', class_='lister-item-year text-muted unbold').text
@@ -96,7 +100,7 @@ movie_ratings.head()
 print(movie_ratings.info())
 movie_ratings.head(10)
 
-
+#cleans the data in the years column
 movie_ratings.loc[:, 'year'] = movie_ratings['year'].str[-5:-1].astype(int)
 movie_ratings.describe().loc[['min', 'max'], ['imdb_rating', 'metascore']]
 movie_ratings['n_imdb'] = movie_ratings['imdb_rating'] * 10
