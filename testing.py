@@ -49,7 +49,7 @@ votes = []
 
 #extract data from movie container if the movie has a metascore
 for items in movie_containers:
-    if items.find('span', class_ = 'metascore favorable') is not None:
+    if items.find('div', class_ = 'metascore favorable') is not None:
         #This takes the names of every div element
         name = items.find('div' , class_ = 'lister-item-content').h3.a.text
         names.append(name)
